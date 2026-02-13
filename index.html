@@ -26,8 +26,8 @@
         body { font-family: 'Open Sans', sans-serif; color: #444; line-height: 1.6; background: var(--white); -webkit-tap-highlight-color: transparent; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; color: var(--secondary); }
         
-        /* Clean loading for images - no layout shifting */
-        img { display: block; max-width: 100%; height: auto; background-color: #f0f0f0; }
+        /* Clean image handling - No placeholder fallbacks to avoid console errors */
+        img { display: block; max-width: 100%; height: auto; content-visibility: auto; }
 
         /* 1. TOPBAR - Desktop */
         .topbar { background: var(--white); padding: 12px 8%; display: flex; justify-content: space-between; font-size: 0.85rem; border-bottom: 1px solid #f0f0f0; position: relative; z-index: 10; }
@@ -46,39 +46,46 @@
         .nav-links a { text-decoration: none; color: var(--secondary); margin-left: 30px; font-weight: 700; font-size: 0.85rem; transition: var(--transition); }
         .nav-links a:hover { color: var(--primary); }
         
-        .nav-btn { background: var(--secondary); color: white !important; padding: 12px 25px; border-radius: 4px; margin-left: 30px !important; transition: var(--transition); text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-block; }
+        .nav-btn { background: var(--secondary); color: white !important; padding: 12px 25px; border-radius: 4px; margin-left: 30px !important; transition: var(--transition); text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-block; cursor: pointer; }
         .nav-btn:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        /* MOBILE MENU - BULLETPROOF STACKING */
+        /* MOBILE MENU - HIGHEST PRIORITY STACKING */
         .menu-toggle { display: none; font-size: 2rem; color: var(--secondary); cursor: pointer; border: none; background: transparent; padding: 10px; position: relative; z-index: 100001; outline: none; }
         .mobile-sidebar {
             position: fixed; top: 0; right: -110%; width: 300px; height: 100vh;
-            background: #FFFFFF; z-index: 100000; transition: 0.4s ease-in-out;
+            background: #FFFFFF; z-index: 100000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 110px 30px 40px; box-shadow: -15px 0 40px rgba(0,0,0,0.2);
-            display: flex; flex-direction: column;
+            display: flex; flex-direction: column; overflow-y: auto; pointer-events: all;
         }
         .mobile-sidebar.active { right: 0; }
         .mobile-sidebar a { color: var(--secondary); text-decoration: none; font-weight: 700; font-size: 1.2rem; padding: 18px 0; border-bottom: 1px solid #f0f0f0; width: 100%; display: block; }
         .mobile-sidebar .nav-btn { margin-left: 0 !important; margin-top: 30px; width: 100%; text-align: center; background: var(--primary); padding: 18px !important; }
 
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; display: none; }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; display: none; cursor: pointer; }
         .menu-overlay.active { display: block; }
 
         /* 3. HERO SECTION */
         .hero { 
             height: 85vh; min-height: 550px; width: 100%;
-            background: linear-gradient(rgba(1,42,94,0.6), rgba(18,28,40,0.85)), url('construction-site-with-night-time-in-the-city-2026-01-07-00-12-07-utc.webp');
+            background: linear-gradient(rgba(1,42,94,0.65), rgba(18,28,40,0.85)), url('construction-site-with-night-time-in-the-city-2026-01-07-00-12-07-utc.webp');
             background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--white);
         }
         .hero-content { max-width: 1100px; padding: 0 25px; animation: heroFadeIn 1s ease; }
-        .hero h5 { color: var(--white); letter-spacing: 5px; margin-bottom: 20px; font-size: 1.1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); color: var(--white); line-height: 1.1; margin-bottom: 30px; text-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         
+        /* Visibility Over Image Fix */
+        .hero h5 { color: var(--primary); letter-spacing: 5px; margin-bottom: 20px; font-size: 1.1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); font-weight: 900; }
+        .hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); color: var(--white); line-height: 1.1; margin-bottom: 30px; text-shadow: 0 5px 25px rgba(0,0,0,0.8); }
+        
+        .breadcrumb-hero { display: flex; justify-content: center; list-style: none; margin-bottom: 40px; flex-wrap: wrap; gap: 15px; }
+        .breadcrumb-hero li { font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
+        .breadcrumb-hero li::before { content: ''; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; margin-right: 10px; }
+        
+        /* HOVERS */
         .hero-btns { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .hero-btns .btn-primary { background: var(--primary); color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--primary); display: inline-block; cursor: pointer; }
-        .hero-btns .btn-primary:hover { transform: translateY(-5px); background: #e0a007; box-shadow: 0 15px 30px rgba(249, 178, 8, 0.4); }
-        .hero-btns .btn-outline { background: transparent; color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--white); display: inline-block; cursor: pointer; }
-        .hero-btns .btn-outline:hover { transform: translateY(-5px); background: var(--white); color: var(--secondary); }
+        .btn-primary { background: var(--primary); color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--primary); display: inline-block; cursor: pointer; }
+        .btn-primary:hover { transform: translateY(-5px); background: #e0a007; box-shadow: 0 15px 30px rgba(249, 178, 8, 0.4); }
+        .btn-outline { background: transparent; color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--white); display: inline-block; cursor: pointer; }
+        .btn-outline:hover { transform: translateY(-5px); background: var(--white); color: var(--secondary); }
 
         /* 4. ABOUT SECTION */
         .section-padding { padding: 100px 8%; width: 100%; position: relative; }
@@ -86,18 +93,18 @@
         .exp-badge { position: absolute; top: -30px; left: -30px; background: var(--primary); color: white; padding: 40px; text-align: center; border-radius: 4px; z-index: 10; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); }
         .exp-badge h2 { font-size: 3.5rem; margin-bottom: -5px; color: white; line-height: 1; }
 
-        /* 5. FACTS SECTION - GOLD FOR VISIBILITY */
+        /* 5. FACTS SECTION - GOLD TITLES FOR READABILITY */
         .facts { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--dark); width: 100%; }
         .fact-card { position: relative; height: 400px; overflow: hidden; color: white; cursor: pointer; }
-        .fact-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); transition: 0.8s cubic-bezier(0.2, 0, 0, 1); }
+        .fact-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.45); transition: 0.8s cubic-bezier(0.2, 0, 0, 1); }
         .fact-card:hover img { transform: scale(1.15); filter: brightness(0.3); }
         .fact-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 50px; display: flex; flex-direction: column; justify-content: flex-end; z-index: 2; transition: var(--transition); }
         .fact-overlay h3 { margin-bottom: 12px; font-size: 1.6rem; color: var(--primary); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .fact-overlay p { color: #f2f2f2; font-weight: 600; }
+        .fact-overlay p { color: #f2f2f2; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
 
         /* 6. MISSION SECTION - SCALING FIX */
         .features { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .mission-img-wrap { border-radius: 8px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.1); max-height: 450px; }
+        .mission-img-wrap { border-radius: 8px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.1); max-height: 450px; position: relative; }
         .mission-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .feat-item { display: flex; align-items: center; margin-bottom: 25px; font-weight: 700; color: var(--secondary); }
         .feat-item i { color: var(--primary); font-size: 1.8rem; margin-right: 20px; }
@@ -107,7 +114,9 @@
         .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 60px; }
         .service-item { background: var(--white); transition: var(--transition); border-radius: 8px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.04); text-align: left; }
         .service-item:hover { transform: translateY(-12px); box-shadow: 0 25px 60px rgba(0,0,0,0.1); }
-        .service-item img { width: 100%; height: 250px; object-fit: cover; transition: 0.5s; }
+        .service-item img { width: 100%; height: 250px; object-fit: cover; transition: 0.5s; background: #eee; }
+        .service-content { padding: 35px; }
+        .service-item h4 { font-size: 1.2rem; margin-bottom: 15px; border-left: 4px solid var(--primary); padding-left: 15px; }
 
         /* 8. CONTACT SECTION - FIXED TITLES */
         .appointment { 
@@ -124,12 +133,13 @@
         .contact-card:hover { background: rgba(255,255,255,0.15); transform: translateX(10px); border-color: var(--primary); }
         .contact-card i { font-size: 2.8rem; color: var(--primary); }
         .contact-card h4 { font-size: 1.4rem; color: var(--primary); margin-bottom: 5px; }
-        .contact-card p { opacity: 0.9; font-size: 1rem; font-weight: 700; color: white; }
+        .contact-card p { opacity: 1; font-size: 1rem; font-weight: 700; color: white; }
 
         /* 11. FOOTER */
         footer { background: var(--secondary); color: white; padding: 100px 8% 0; }
         .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px; padding-bottom: 80px; }
         .footer-grid h4 { color: white; margin-bottom: 30px; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px; }
+        .footer-grid p { color: #bdc3c7; font-size: 0.95rem; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
 
         /* 12. DESIGNER BAR - CLASSY */
         .designer-bar {
@@ -175,7 +185,7 @@
         <a href="Roqen-Profile.pdf" class="nav-btn" target="_blank">VIEW PROFILE</a>
     </div>
 
-    <!-- 1. TOPBAR (Desktop) -->
+    <!-- 1. TOPBAR (Desktop Only) -->
     <div class="topbar">
         <div class="topbar-info">
             <span><i class="fas fa-phone-alt"></i> +974 4036 0873</span>
@@ -272,7 +282,7 @@
                 <div style="display: flex; align-items: center; margin-bottom: 25px; font-weight: 700; color: var(--secondary);"><i class="fas fa-users-cog" style="color: var(--primary); font-size: 1.8rem; margin-right: 20px;"></i> PROFESSIONAL TEAM</div>
             </div>
         </div>
-        <div class="mission-img-wrap" style="position: relative;">
+        <div class="mission-img-wrap">
             <div class="exp-badge" style="left: auto; right: -20px; background:var(--secondary);">
                 <h2 style="color: white;">123+</h2>
                 <p>MAJOR<br>PROJECTS</p>
@@ -358,7 +368,7 @@
         
         <div class="designer-bar">
             <div style="font-size: 0.8rem; color: #95a5a6;">
-                &copy; 2026 Roqen Contracting and Cleaning W.L.L.
+                &copy; 2026 Roqen Contracting and Cleaning W.L.L. All Rights Reserved.
             </div>
             <a href="https://keyframeglobal.com" class="credit-link" target="_blank">
                 <span>By: Keyframe Global</span>
