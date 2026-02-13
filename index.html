@@ -20,13 +20,13 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 0. CORE RESET */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* 0. CORE RESET & PERFORMANCE */
+        * { margin: 0; padding: 0; box-sizing: border-box; list-style: none; }
         html, body { width: 100%; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
         body { font-family: 'Open Sans', sans-serif; color: #444; line-height: 1.6; background: var(--white); -webkit-tap-highlight-color: transparent; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; color: var(--secondary); }
         
-        img { display: block; max-width: 100%; height: auto; }
+        img { display: block; max-width: 100%; height: auto; content-visibility: auto; }
 
         /* 1. TOPBAR */
         .topbar { background: var(--white); padding: 12px 8%; display: flex; justify-content: space-between; font-size: 0.85rem; border-bottom: 1px solid #f0f0f0; position: relative; z-index: 10; }
@@ -48,7 +48,7 @@
         .nav-btn { background: var(--secondary); color: white !important; padding: 12px 25px; border-radius: 4px; margin-left: 30px !important; transition: var(--transition); text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-block; cursor: pointer; }
         .nav-btn:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        /* MOBILE MENU - BULLETPROOF */
+        /* MOBILE MENU - BULLETPROOF STACKING */
         .menu-toggle { display: none; font-size: 2rem; color: var(--secondary); cursor: pointer; border: none; background: transparent; padding: 10px; position: relative; z-index: 100001; outline: none; }
         .mobile-sidebar {
             position: fixed; top: 0; right: -110%; width: 300px; height: 100vh;
@@ -70,19 +70,22 @@
             background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--white);
         }
         .hero-content { max-width: 1100px; padding: 0 25px; animation: heroFadeIn 1s ease; }
+        
+        /* Visibility Over Image Fix */
         .hero h5 { color: var(--primary); letter-spacing: 5px; margin-bottom: 20px; font-size: 1.1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); font-weight: 900; }
-        .hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); color: var(--white); line-height: 1.1; margin-bottom: 30px; text-shadow: 0 5px 25px rgba(0,0,0,0.8); }
+        .hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); color: var(--white); line-height: 1.1; margin-bottom: 30px; text-shadow: 0 10px 25px rgba(0,0,0,0.7); }
         
-        .breadcrumb-hero { display: flex; justify-content: center; list-style: none; margin-bottom: 40px; flex-wrap: wrap; gap: 25px; }
-        .breadcrumb-hero li { font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); position: relative; }
-        /* FIXED DOTS: Only one CSS dot per item */
-        .breadcrumb-hero li::before { content: ''; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; display: inline-block; margin-right: 12px; }
+        /* Fixed Dots: Removed ::before and using explicit HTML icons */
+        .breadcrumb-hero { display: flex; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+        .breadcrumb-hero li { font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.9rem; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
+        .breadcrumb-hero li i { color: var(--primary); margin-right: 10px; font-size: 8px; }
         
+        /* HOVERS */
         .hero-btns { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-primary { background: var(--primary); color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--primary); display: inline-block; cursor: pointer; }
-        .btn-primary:hover { transform: translateY(-5px); background: #e0a007; box-shadow: 0 15px 30px rgba(249, 178, 8, 0.4); }
-        .btn-outline { background: transparent; color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--white); display: inline-block; cursor: pointer; }
-        .btn-outline:hover { transform: translateY(-5px); background: var(--white); color: var(--secondary); }
+        .hero-btns .btn-primary { background: var(--primary); color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--primary); display: inline-block; cursor: pointer; }
+        .hero-btns .btn-primary:hover { transform: translateY(-5px); background: #e0a007; box-shadow: 0 15px 30px rgba(249, 178, 8, 0.4); }
+        .hero-btns .btn-outline { background: transparent; color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--white); display: inline-block; cursor: pointer; }
+        .hero-btns .btn-outline:hover { transform: translateY(-5px); background: var(--white); color: var(--secondary); }
 
         /* 4. ABOUT SECTION */
         .section-padding { padding: 100px 8%; width: 100%; position: relative; }
@@ -97,11 +100,11 @@
         .fact-card:hover img { transform: scale(1.15); filter: brightness(0.3); }
         .fact-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 50px; display: flex; flex-direction: column; justify-content: flex-end; z-index: 2; transition: var(--transition); }
         .fact-overlay h3 { margin-bottom: 12px; font-size: 1.6rem; color: var(--primary); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .fact-overlay p { color: #f2f2f2; font-weight: 600; }
+        .fact-overlay p { color: #f2f2f2; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
 
         /* 6. MISSION SECTION - SCALING FIX */
         .features { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .mission-img-wrap { border-radius: 8px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.1); max-height: 480px; position: relative; }
+        .mission-img-wrap { border-radius: 8px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.1); max-height: 420px; position: relative; width: 100%; }
         .mission-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .feat-item { display: flex; align-items: center; margin-bottom: 25px; font-weight: 700; color: var(--secondary); }
         .feat-item i { color: var(--primary); font-size: 1.8rem; margin-right: 20px; }
@@ -181,7 +184,7 @@
         <a href="Roqen-Profile.pdf" class="nav-btn" target="_blank">VIEW PROFILE</a>
     </div>
 
-    <!-- 1. TOPBAR (Desktop Only) -->
+    <!-- 1. TOPBAR -->
     <div class="topbar">
         <div class="topbar-info">
             <span><i class="fas fa-phone-alt"></i> +974 4036 0873</span>
@@ -213,9 +216,9 @@
             <h5>ROQEN CONTRACTING & CLEANING</h5>
             <h1>Engineering Excellence Across Qatar</h1>
             <ul class="breadcrumb-hero">
-                <li>COMMERCIAL</li>
-                <li>RESIDENTIAL</li>
-                <li>INDUSTRIAL</li>
+                <li><i class="fas fa-circle"></i> COMMERCIAL</li>
+                <li><i class="fas fa-circle"></i> RESIDENTIAL</li>
+                <li><i class="fas fa-circle"></i> INDUSTRIAL</li>
             </ul>
             <div class="hero-btns">
                 <a href="#about" class="btn-primary">DISCOVER MORE</a>
