@@ -20,16 +20,15 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 0. CORE RESET & PERFORMANCE */
+        /* 0. CORE RESET */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
         body { font-family: 'Open Sans', sans-serif; color: #444; line-height: 1.6; background: var(--white); -webkit-tap-highlight-color: transparent; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; color: var(--secondary); }
         
-        /* Clean image handling - No placeholder fallbacks to avoid console errors */
-        img { display: block; max-width: 100%; height: auto; content-visibility: auto; }
+        img { display: block; max-width: 100%; height: auto; }
 
-        /* 1. TOPBAR - Desktop */
+        /* 1. TOPBAR */
         .topbar { background: var(--white); padding: 12px 8%; display: flex; justify-content: space-between; font-size: 0.85rem; border-bottom: 1px solid #f0f0f0; position: relative; z-index: 10; }
         .topbar-info span { margin-right: 30px; font-weight: 600; color: var(--secondary); display: inline-flex; align-items: center; }
         .topbar-info i { color: var(--primary); margin-right: 10px; }
@@ -40,7 +39,7 @@
             padding: 15px 8%; background: var(--white); position: sticky; top: 0; 
             z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); width: 100%;
         }
-        .logo img { height: 60px; width: auto; object-fit: contain; background: transparent; }
+        .logo img { height: 60px; width: auto; object-fit: contain; }
         
         .nav-links { display: flex; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--secondary); margin-left: 30px; font-weight: 700; font-size: 0.85rem; transition: var(--transition); }
@@ -49,13 +48,13 @@
         .nav-btn { background: var(--secondary); color: white !important; padding: 12px 25px; border-radius: 4px; margin-left: 30px !important; transition: var(--transition); text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-block; cursor: pointer; }
         .nav-btn:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        /* MOBILE MENU - HIGHEST PRIORITY STACKING */
+        /* MOBILE MENU - BULLETPROOF */
         .menu-toggle { display: none; font-size: 2rem; color: var(--secondary); cursor: pointer; border: none; background: transparent; padding: 10px; position: relative; z-index: 100001; outline: none; }
         .mobile-sidebar {
             position: fixed; top: 0; right: -110%; width: 300px; height: 100vh;
-            background: #FFFFFF; z-index: 100000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #FFFFFF; z-index: 100000; transition: 0.4s ease-in-out;
             padding: 110px 30px 40px; box-shadow: -15px 0 40px rgba(0,0,0,0.2);
-            display: flex; flex-direction: column; overflow-y: auto; pointer-events: all;
+            display: flex; flex-direction: column;
         }
         .mobile-sidebar.active { right: 0; }
         .mobile-sidebar a { color: var(--secondary); text-decoration: none; font-weight: 700; font-size: 1.2rem; padding: 18px 0; border-bottom: 1px solid #f0f0f0; width: 100%; display: block; }
@@ -67,20 +66,18 @@
         /* 3. HERO SECTION */
         .hero { 
             height: 85vh; min-height: 550px; width: 100%;
-            background: linear-gradient(rgba(1,42,94,0.65), rgba(18,28,40,0.85)), url('construction-site-with-night-time-in-the-city-2026-01-07-00-12-07-utc.webp');
+            background: linear-gradient(rgba(1,42,94,0.65), rgba(18,28,40,0.85)), url('hero.webp');
             background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--white);
         }
         .hero-content { max-width: 1100px; padding: 0 25px; animation: heroFadeIn 1s ease; }
-        
-        /* Visibility Over Image Fix */
         .hero h5 { color: var(--primary); letter-spacing: 5px; margin-bottom: 20px; font-size: 1.1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); font-weight: 900; }
         .hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); color: var(--white); line-height: 1.1; margin-bottom: 30px; text-shadow: 0 5px 25px rgba(0,0,0,0.8); }
         
-        .breadcrumb-hero { display: flex; justify-content: center; list-style: none; margin-bottom: 40px; flex-wrap: wrap; gap: 15px; }
-        .breadcrumb-hero li { font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
-        .breadcrumb-hero li::before { content: ''; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; margin-right: 10px; }
+        .breadcrumb-hero { display: flex; justify-content: center; list-style: none; margin-bottom: 40px; flex-wrap: wrap; gap: 25px; }
+        .breadcrumb-hero li { font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); position: relative; }
+        /* FIXED DOTS: Only one CSS dot per item */
+        .breadcrumb-hero li::before { content: ''; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; display: inline-block; margin-right: 12px; }
         
-        /* HOVERS */
         .hero-btns { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .btn-primary { background: var(--primary); color: var(--white); padding: 18px 45px; text-decoration: none; font-weight: 900; border-radius: 4px; transition: var(--transition); border: 2px solid var(--primary); display: inline-block; cursor: pointer; }
         .btn-primary:hover { transform: translateY(-5px); background: #e0a007; box-shadow: 0 15px 30px rgba(249, 178, 8, 0.4); }
@@ -93,18 +90,18 @@
         .exp-badge { position: absolute; top: -30px; left: -30px; background: var(--primary); color: white; padding: 40px; text-align: center; border-radius: 4px; z-index: 10; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); }
         .exp-badge h2 { font-size: 3.5rem; margin-bottom: -5px; color: white; line-height: 1; }
 
-        /* 5. FACTS SECTION - GOLD TITLES FOR READABILITY */
+        /* 5. FACTS SECTION - GOLD FOR VISIBILITY */
         .facts { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--dark); width: 100%; }
         .fact-card { position: relative; height: 400px; overflow: hidden; color: white; cursor: pointer; }
         .fact-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.45); transition: 0.8s cubic-bezier(0.2, 0, 0, 1); }
         .fact-card:hover img { transform: scale(1.15); filter: brightness(0.3); }
         .fact-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 50px; display: flex; flex-direction: column; justify-content: flex-end; z-index: 2; transition: var(--transition); }
         .fact-overlay h3 { margin-bottom: 12px; font-size: 1.6rem; color: var(--primary); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .fact-overlay p { color: #f2f2f2; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .fact-overlay p { color: #f2f2f2; font-weight: 600; }
 
         /* 6. MISSION SECTION - SCALING FIX */
         .features { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .mission-img-wrap { border-radius: 8px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.1); max-height: 450px; position: relative; }
+        .mission-img-wrap { border-radius: 8px; overflow: hidden; box-shadow: 0 15px 45px rgba(0,0,0,0.1); max-height: 480px; position: relative; }
         .mission-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .feat-item { display: flex; align-items: center; margin-bottom: 25px; font-weight: 700; color: var(--secondary); }
         .feat-item i { color: var(--primary); font-size: 1.8rem; margin-right: 20px; }
@@ -120,7 +117,7 @@
 
         /* 8. CONTACT SECTION - FIXED TITLES */
         .appointment { 
-            background: linear-gradient(rgba(1,42,94,0.92), rgba(18,28,40,0.96)), url('etienne-girardet-sgYamIzhAhg-unsplash.webp'); 
+            background: linear-gradient(rgba(1,42,94,0.92), rgba(18,28,40,0.96)), url('service1.webp'); 
             background-size: cover; background-position: center; color: white; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; 
         }
         .contact-methods { display: grid; gap: 20px; width: 100%; }
@@ -149,8 +146,7 @@
         }
         .credit-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #95a5a6; font-size: 0.85rem; font-weight: 600; transition: 0.3s; }
         .credit-link:hover { color: var(--primary); }
-        .credit-link img { height: 28px; filter: grayscale(1) brightness(0.8); transition: 0.3s; background: transparent; }
-        .credit-link:hover img { filter: grayscale(0) brightness(1.2); }
+        .credit-link img { height: 28px; transition: 0.3s; background: transparent; }
 
         /* MOBILE FIXES */
         @media (max-width: 1024px) {
@@ -196,7 +192,7 @@
     <!-- 2. NAVIGATION -->
     <nav>
         <div class="logo">
-            <img src="roqen-logo.jpg" alt="Roqen Logo">
+            <img src="logo.jpg" alt="Roqen Logo">
         </div>
         <button class="menu-toggle" id="mobile-toggle" aria-label="Open Menu">
             <i class="fas fa-bars"></i>
@@ -216,10 +212,10 @@
         <div class="hero-content">
             <h5>ROQEN CONTRACTING & CLEANING</h5>
             <h1>Engineering Excellence Across Qatar</h1>
-            <ul class="breadcrumb-hero" style="display: flex; justify-content: center; list-style: none; margin-bottom: 40px; flex-wrap: wrap; gap: 15px;">
-                <li style="font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;"><i class="fas fa-circle" style="font-size: 8px; color: var(--primary); margin-right: 10px;"></i> COMMERCIAL</li>
-                <li style="font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;"><i class="fas fa-circle" style="font-size: 8px; color: var(--primary); margin-right: 10px;"></i> RESIDENTIAL</li>
-                <li style="font-weight: 700; display: flex; align-items: center; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;"><i class="fas fa-circle" style="font-size: 8px; color: var(--primary); margin-right: 10px;"></i> INDUSTRIAL</li>
+            <ul class="breadcrumb-hero">
+                <li>COMMERCIAL</li>
+                <li>RESIDENTIAL</li>
+                <li>INDUSTRIAL</li>
             </ul>
             <div class="hero-btns">
                 <a href="#about" class="btn-primary">DISCOVER MORE</a>
@@ -235,7 +231,7 @@
                 <h2>15+</h2>
                 <p>YEARS OF<br>VISION</p>
             </div>
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200" alt="Engineering Excellence" loading="lazy" style="border-radius: 8px;">
+            <img src="hero.webp" alt="Engineering Excellence" loading="lazy" style="border-radius: 8px;">
         </div>
         <div>
             <h6 style="color:var(--primary); letter-spacing:2px; margin-bottom:20px;">ESTABLISHED 2011</h6>
@@ -253,19 +249,19 @@
     <!-- 5. FACTS GRID -->
     <section class="facts">
         <div class="fact-card">
-            <img src="tower-crane-and-building-construction-site-silhoue-2026-01-11-09-08-38-utc.webp" alt="Construction" loading="lazy">
+            <img src="fact1.webp" alt="Construction" loading="lazy">
             <div class="fact-overlay"><h3>Construction</h3><p>Infrastructure design and execution.</p></div>
         </div>
         <div class="fact-card">
-            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800" alt="Mechanical" loading="lazy">
+            <img src="fact2.webp" alt="Mechanical" loading="lazy">
             <div class="fact-overlay"><h3>Mechanical</h3><p>Steel Fabrication services.</p></div>
         </div>
         <div class="fact-card">
-            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800" alt="Architecture" loading="lazy">
+            <img src="fact3.webp" alt="Architecture" loading="lazy">
             <div class="fact-overlay"><h3>Architecture</h3><p>Innovative design solutions.</p></div>
         </div>
         <div class="fact-card">
-            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800" alt="Interior Fit-Out" loading="lazy">
+            <img src="fact4.webp" alt="Interior Fit-Out" loading="lazy">
             <div class="fact-overlay"><h3>Interior</h3><p>Premium marble and finishing.</p></div>
         </div>
     </section>
@@ -287,7 +283,7 @@
                 <h2 style="color: white;">123+</h2>
                 <p>MAJOR<br>PROJECTS</p>
             </div>
-            <img src="building-complex-prototype-project-of-residential-2024-12-12-06-58-23-utc.webp" alt="Our Mission" loading="lazy">
+            <img src="mission.webp" alt="Our Mission" loading="lazy">
         </div>
     </section>
 
@@ -297,27 +293,27 @@
         <h2>Building and Infrastructure Solutions</h2>
         <div class="service-grid">
             <div class="service-item">
-                <img src="etienne-girardet-sgYamIzhAhg-unsplash.webp" alt="Building Construction" loading="lazy">
+                <img src="service1.webp" alt="Building Construction" loading="lazy">
                 <div class="service-content"><h4>Building Construction</h4><p>Comprehensive design for industrial sectors.</p></div>
             </div>
             <div class="service-item">
-                <img src="air-conditioning-installing-repair-condition-2025-05-13-07-34-15-utc.webp" alt="HVAC Services" loading="lazy">
+                <img src="service2.webp" alt="HVAC Services" loading="lazy">
                 <div class="service-content"><h4>HVAC Services</h4><p>Duct cleaning and installation systems.</p></div>
             </div>
             <div class="service-item">
-                <img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&q=80&w=800" alt="Painting" loading="lazy">
+                <img src="service3.webp" alt="Painting" loading="lazy">
                 <div class="service-content"><h4>Painting & Coating</h4><p>Industrial protective coatings.</p></div>
             </div>
             <div class="service-item">
-                <img src="hand-worker-cement-2026-01-09-11-55-05-utc.webp" alt="Plastering Repairs" loading="lazy">
+                <img src="service4.webp" alt="Plastering Repairs" loading="lazy">
                 <div class="service-content"><h4>Plastering Repairs</h4><p>Expert crack filling and structural leveling.</p></div>
             </div>
             <div class="service-item">
-                <img src="top-view-of-white-marble-texture-background-2026-01-09-07-51-56-utc.webp" alt="Marble & Tile" loading="lazy">
+                <img src="service5.webp" alt="Marble & Tile" loading="lazy">
                 <div class="service-content"><h4>Marble & Tile</h4><p>Luxury flooring and precision tiling.</p></div>
             </div>
             <div class="service-item">
-                <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=800" alt="Electrical Works" loading="lazy">
+                <img src="service6.webp" alt="Electrical Works" loading="lazy">
                 <div class="service-content"><h4>Electrical Works</h4><p>Design and commissioning of systems.</p></div>
             </div>
         </div>
@@ -372,7 +368,7 @@
             </div>
             <a href="https://keyframeglobal.com" class="credit-link" target="_blank">
                 <span>By: Keyframe Global</span>
-                <img src="keyfram%20logo%20website%20icon.png" alt="Keyframe Global Icon">
+                <img src="keyframe-icon.png" alt="Keyframe Global Icon">
             </a>
         </div>
     </footer>
